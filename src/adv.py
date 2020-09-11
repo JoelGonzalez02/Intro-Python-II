@@ -97,30 +97,50 @@ while playing:
     elif cmd == 'q':
         playing = False
         print("Thanks for playing")
-    else:
-        print(f'{cmd} is not a valid input')
+    # else:
+    #     print(f'{cmd} is not a valid input')
         
-
-    if len(cmd.split(' ')) > 1:
+    elif len(cmd.split(' ')) > 1:
         action, item_name = cmd.split(' ')
 
-    if action == 'get':
-        picked_up_item = [item_name]
-        player.location.remove_item(picked_up_item)
-        picked_up_weapon = [item_name]
-        player.location.remove_weapon(picked_up_weapon)
-        player.get(picked_up_item)
-        player.get(picked_up_weapon)
-        picked_up_item.on_take()
-        picked_up_weapon.on_take()
+        if action == 'get' or action == 'take':
+            if item_name not in item or item[item_name] not in getattr(player.location, 'items'):
+                print('Sorry, that item is not here anymore')
+
+            else:
+                picked_up_item = item[item_name]
+                player.location.remove_item(picked_up_item)
+                player.get(picked_up_item)
+                picked_up_item.on_take()
+
+        if action == 'drop':
+            if item_name not in item or item[item_name] not in getattr(player, 'items'):
+                print('You are not carrying that item')
+
+            else:
+                dropped_item = item[item_name]
+                player.drop(dropped_item)
+                player.location.store_item(dropped_item)
+                dropped_item.on_drop()
+            
+
+    # if action == 'get':
+    #     picked_up_item = [item_name]
+    #     player.location.remove_item(picked_up_item)
+    #     picked_up_weapon = [item_name]
+    #     player.location.remove_weapon(picked_up_weapon)
+    #     player.get(picked_up_item)
+    #     player.get(picked_up_weapon)
+    #     picked_up_item.on_take()
+    #     picked_up_weapon.on_take()
     
-    if action == 'drop':
-        dropped_item = item[item_name]
-        player.drop(dropped_item)
-        dropped_weapon = weapon[item_name]
-        player.drop(dropped_weapon)
-        player.location.store_item(dropped_item)
-        player.loation.store_weapon(dropped_weapon)
-        dropped_item.on_drop()
-        dropped_weapon.on_drop()
+    # if action == 'drop':
+    #     dropped_item = item[item_name]
+    #     player.drop(dropped_item)
+    #     dropped_weapon = weapon[item_name]
+    #     player.drop(dropped_weapon)
+    #     player.location.store_item(dropped_item)
+    #     player.loation.store_weapon(dropped_weapon)
+    #     dropped_item.on_drop()
+    #     dropped_weapon.on_drop()
 
