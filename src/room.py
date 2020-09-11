@@ -3,11 +3,10 @@
 
 
 class Room:
-    def __init__(self, name, description, items=[], weapons=[]):
+    def __init__(self, name, description, items=[]):
         self.name = name
         self.description = description
         self.items = items
-        self.weapons = weapons
 
     def remove_item(self, item):
         self.items.remove(item)
@@ -25,5 +24,8 @@ class Room:
         self.weapons.append(weapon)
         return 
     
+    # def __str__(self):
+    #     return f'{self.name}\n\n{self.description}\n\n"Items in this room:"\t{self.items}\n "Weapons in this room:"\t{self.weapons}'
+
     def __str__(self):
-        return f'{self.name}\n\n{self.description}\n\n"Items in this room:"\t{self.items}\n "Weapons in this room:"\t{self.weapons}'
+        return f'{self.name}\n\n{self.description}\n\n "Items in this room: "\t{" , ".join(str(item) for item in self.items)}\n'

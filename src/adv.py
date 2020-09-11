@@ -5,17 +5,21 @@ from player import Player
 
 # Declare all the items
 
-weapon = {
-    'shield': Weapon('Shield', 'A shield that can be used to protect yourself', 20),
+# weapon = {
+#     'shield': Weapon('Shield', 'A shield that can be used to protect yourself', 20),
 
-    'sword': Weapon('Sword', 'An ancient sword that can be used to slay your enemies', 60),
-}
+#     'sword': Weapon('Sword', 'An ancient sword that can be used to slay your enemies', 60),
+# }
 
 item = {
     
     'berries': Item('Berries', 'Magic berries that will restore your health'),
 
-    'torch': Item('Torch', 'A wooden stick wrapped in cloth and lit on fire, helps illuminate the cave')
+    'torch': Item('Torch', 'A wooden stick wrapped in cloth and lit on fire, helps illuminate the cave'),
+
+     'shield': Item('Shield', 'A shield that can be used to protect yourself'),
+
+    'sword': Item('Sword', 'An ancient sword that can be used to slay your enemies'),
 }
 
 
@@ -23,21 +27,21 @@ item = {
 
 room = {
     'outside':  Room("Outside Cave Entrance",
-                     "North of you, the cave mount beckons", item['torch'], []),
+                     "North of you, the cave mount beckons", [item['torch']]),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east.""", [], weapon['shield']),
+passages run north and east.""", [item['shield']]),
 
     'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""", item['berries'], []),
+the distance, but there is no way across the chasm.""", [item['berries']]),
 
     'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air.""", [], []),
+to north. The smell of gold permeates the air.""", []),
 
     'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""", item['berries'], weapon['sword']),
+earlier adventurers. The only exit is to the south.""", [item['berries'], item['sword']]),
 }
 
 
@@ -90,22 +94,17 @@ while playing:
         except AttributeError:
             print('Not a valid direction')
     
-    # elif cmd == 'i':
-    #     player.print_inventory()
-        
-    
     elif cmd == 'q':
         playing = False
         print("Thanks for playing")
-    # else:
-    #     print(f'{cmd} is not a valid input')
-        
+  
     elif len(cmd.split(' ')) > 1:
         action, item_name = cmd.split(' ')
 
         if action == 'get' or action == 'take':
             if item_name not in item or item[item_name] not in getattr(player.location, 'items'):
-                print('Sorry, that item is not here anymore')
+                print('Sorry, that item is not here')
+                
 
             else:
                 picked_up_item = item[item_name]
