@@ -5,9 +5,9 @@ class Item:
         self.description = description
 
     def __str__(self):
-        return f'{self.name} : {self.description}\n\n'
+        return f'{self.name}\n{self.description}'
 
-    def pick_up(self):
+    def pick_up_item(self):
         print(f'You have picked up the {self.name}.')
 
     def drop_item(self):
